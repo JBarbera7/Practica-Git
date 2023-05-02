@@ -1,17 +1,23 @@
 pipeline {
     agent any
-    
+    tools {
+        nodejs 'node'
+    }
     stages {
         stage('linter') {
             steps {
-                sh 'npm run ./sum.test.js'
+                bat 'npm run lint'
             }
         }
         stage('test') {
             steps {
-                sh 'npm run test'
+                bat 'npm run test'
             }
-     
+        }
+        stage('deploy') {
+            steps {
+                bat 'npm test'
+            }
+        }
     }
-}
 }
