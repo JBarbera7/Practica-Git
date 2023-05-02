@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('execution') {
       steps {
-        sh 'node index.js $persona_a_saludar'
+        bat 'node index.js $persona_a_saludar'
       }
     }
   }
