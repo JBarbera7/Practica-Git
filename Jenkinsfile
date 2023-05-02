@@ -1,21 +1,13 @@
 pipeline {
     agent any
-   
     
+    parameters {
+        string(name: 'persona_a_saludar', defaultValue: '', description: 'Persona a saludar')
+    }
     stages {
-        stage('linter') {
+        stage('execution') {
             steps {
-                sh 'npm run lint'
-            }
-        }
-        stage('test') {
-            steps {
-                sh 'npm run test'
-            }
-        }
-        stage('deploy') {
-            steps {
-                sh 'npm test'
+                sh "node index.js ${params.persona_a_saludar}"
             }
         }
     }
