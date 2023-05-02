@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('linter') {
             steps {
-                sh 'npm run lint'
+                sh 'npm run ./sum.test.js'
             }
         }
         stage('test') {
