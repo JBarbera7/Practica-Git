@@ -4,23 +4,24 @@ pipeline {
     triggers {
     pollSCM('*/5 * * * *')
 }
+  environment {
+        resultadoSuma = ''
+        resultadoResta = ''
+    }
    
  
     parameters {
         string(name: 'suma', defaultValue: '', description: '¿Cuanto es 1+1?')
         string(name: 'resta', defaultValue: '', description: '¿ Y 2-1?')
     }
-    environment {
-        resultadoSuma = ''
-        resultadoResta = ''
-    }
+   
     stages {
         stage('Suma') {
             steps {
                 script {
-                    def result = bat(script: "node jenkinsScript/suma.js ${params.suma}", returnStdout: true).trim()
+                    def result = bat(script: "jenkinsScript/suma.js " + params.suma, returnStdout: true).trim()
                     if (result == "correcto") {
-                         resultadoSuma = "correcot"
+                         resultadoSuma = "correcto"
                     } else {
                         resultadoSuma = "incorrecto"
                     }
@@ -30,7 +31,7 @@ pipeline {
         stage('Resta') {
             steps {
                 script {
-                    def result = bat(script: "node jenkinsScript/resta.js ${params.resta}", returnStdout: true).trim()
+                    def result = bat(script: " jenkinsScript/resta.js" + params.resta, returnStdout: true).trim()
                     if (result == "correcto") {
                         resultadoResta = "correcto"
                     } else {
