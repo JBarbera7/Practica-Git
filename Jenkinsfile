@@ -14,7 +14,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                 bat 'npm test'
+                 bat 'node ./app.js'
             }
         }
     }
