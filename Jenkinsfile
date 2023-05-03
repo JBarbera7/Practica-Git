@@ -1,20 +1,30 @@
 pipeline {
     agent any
    
+    parameters {
+        string(name: 'persona_a_saludar', defaultValue: 'Mundo', description: 'Persona a saludar')
+    }
     stages {
-        stage('linter') {
+        stage('Non-Parallel Stage') {
             steps {
-                bat 'npm run lint'
+                bat "node index.js ${params.persona_a_saludar}"
             }
         }
-        stage('test') {
-            steps {
-                bat 'npm run test'
-            }
-        }
-        stage('deploy') {
-            steps {
-                 bat 'node ./app.js'
+        stage('Parallel Stage') {
+            failFast true
+            parallel {
+                stage('Branch A') {
+                    agent any
+                    steps {
+                        echo "Hola desde la rama A"
+                    }
+                }
+                stage('Branch B') {
+                    agent any
+                    steps {
+                        bat "Hola desde la rama b"
+                    }
+                }
             }
         }
     }
