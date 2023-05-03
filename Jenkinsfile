@@ -14,7 +14,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                 bat 'node ./sum.test.js'
+                 bat 'node ./app.js'
             }
         }
     }
