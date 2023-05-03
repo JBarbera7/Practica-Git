@@ -5,28 +5,49 @@ pipeline {
     pollSCM('*/5 * * * *')
 }
    
+ 
     parameters {
-        string(name: 'persona_a_saludar', defaultValue: 'Mundo', description: 'Persona a saludar')
+        string(name: 'suma', defaultValue: '', description: '¿Cuanto es 1+1?')
+        string(name: 'resta', defaultValue: '', description: '¿ Y 2-1?')
+    }
+    environment {
+        ResultadoSuma = ''
+        ResultadoResta = ''
     }
     stages {
-        stage('Non-Parallel Stage') {
+        stage('Suma') {
             steps {
-                bat "node index.js ${params.persona_a_saludar}"
-            }
-        }
-        stage('Parallel Stage') {
-            failFast true
-            parallel {
-                stage('Branch A') {
-                    agent any
-                    steps {
-                        echo "Hola desde la rama A"
+                script {
+                    def result = bat(script: "node jenkinsScripts/suma.js ${params.suma}", returnStdout: true).trim()
+                    if (result == "correcto") {
+                         ResultadoSuma = "correcot"
+                    } else {
+                        ResultadoSuma = "incorrecto"
                     }
                 }
-                stage('Branch B') {
-                    agent any
-                    steps {
-                        echo "Hola desde la rama b"
+            }
+        }
+        stage('Resta') {
+            steps {
+                script {
+                    def result = bat(script: "node jenkinsScripts/resta.js ${params.resta}", returnStdout: true).trim()
+                    if (result == "correcto") {
+                        ResultadoResta = "correcto"
+                    } else {
+                       ResultadoResta = "incorrecto"
+                    }
+                }
+            }
+        }
+        stage('Resultado') {
+            steps {
+                script {
+                    if ( ResultadoSuma == "incorrecto" &&  ResultadoResta == "incorrecto") {
+                        echo "Esto pinta muy mal"
+                      } else if ( ResultadoSuma == "correcto" &&  ResultadoResta == "correcto") {
+                        echo "El proyecto va viento en popa!!!"
+                    } else {
+                        echo "Alguna de las dos stages ha fallado"
                     }
                 }
             }
