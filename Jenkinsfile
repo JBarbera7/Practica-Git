@@ -19,7 +19,7 @@ pipeline {
         stage('Suma') {
             steps {
                 script {
-                    def result = bat(script: "jenkinsScript/suma.js " + params.suma, returnStdout: true).trim()
+                    def result = bat(script: "node jenkinsScript/suma.js " + params.suma, returnStdout: true).trim()
                     if (result == "correcto") {
                          resultadoSuma = "correcto"
                     } else {
@@ -31,7 +31,7 @@ pipeline {
         stage('Resta') {
             steps {
                 script {
-                    def result = bat(script: " jenkinsScript/resta.js" + params.resta, returnStdout: true).trim()
+                    def result = bat(script: "node jenkinsScript/resta.js" + params.resta, returnStdout: true).trim()
                     if (result == "correcto") {
                         resultadoResta = "correcto"
                     } else {
