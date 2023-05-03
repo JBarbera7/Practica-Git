@@ -22,7 +22,7 @@ pipeline {
                 stage('Branch B') {
                     agent any
                     steps {
-                        bat "Hola desde la rama b"
+                        echo "Hola desde la rama b"
                     }
                 }
             }
