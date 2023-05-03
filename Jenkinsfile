@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    
+    triggers {
+    pollSCM('*/5 * * * *')
+}
    
     parameters {
         string(name: 'persona_a_saludar', defaultValue: 'Mundo', description: 'Persona a saludar')
