@@ -31,7 +31,7 @@ pipeline {
         stage('Resta') {
             steps {
                 script {
-                    def result = bat(script: "node jenkinsScript/resta.js" + params.resta, returnStdout: true).trim()
+                    def result = bat(script: "node jenkinsScript/resta.js " + params.resta, returnStdout: true).trim()
                     if (result == "correcto") {
                         resultadoResta = "correcto"
                     } else {
