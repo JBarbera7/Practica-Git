@@ -14,8 +14,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                 bat 'npm install'
-       		 bat 'npm start &'
+                 bat 'node ./sum.test.js'
             }
         }
     }
