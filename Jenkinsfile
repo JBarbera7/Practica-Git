@@ -21,9 +21,9 @@ pipeline {
                 script {
                     def result = bat(script: "node jenkinsScript/suma.js " + params.suma, returnStdout: true).trim()
                     if (result == "correcto") {
-                         resultadoSuma = "correcto"
+                         env.resultadoSuma = "correcto"
                     } else {
-                        resultadoSuma = "incorrecto"
+                        env.resultadoSuma = "incorrecto"
                     }
                 }
             }
@@ -33,9 +33,9 @@ pipeline {
                 script {
                     def result = bat(script: "node jenkinsScript/resta.js " + params.resta, returnStdout: true).trim()
                     if (result == "correcto") {
-                        resultadoResta = "correcto"
+                        env.resultadoResta = "correcto"
                     } else {
-                       resultadoResta = "incorrecto"
+                       env.resultadoResta = "incorrecto"
                     }
                 }
             }
@@ -43,9 +43,9 @@ pipeline {
         stage('Resultado') {
             steps {
                 script {
-                    if ( resultadoSuma == "incorrecto" &&  resultadoResta == "incorrecto") {
+                    if ( env.resultadoSuma == "incorrecto" &&  env.resultadoResta == "incorrecto") {
                         echo "Esto pinta muy mal"
-                      } else if ( resultadoSuma == "correcto" &&  resultadoResta == "correcto") {
+                      } else if ( env.resultadoSuma == "correcto" &&  env.resultadoResta == "correcto") {
                         echo "El proyecto va viento en popa!!!"
                     } else {
                         echo "Alguna de las dos stages ha fallado"
